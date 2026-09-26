@@ -1,0 +1,201 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 1rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.16 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.16 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.16 0 0);
+  --primary: oklch(0.52 0.188 31);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0 0);
+  --secondary-foreground: oklch(0.16 0 0);
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.44 0 0);
+  --accent: oklch(0.96 0 0);
+  --accent-foreground: oklch(0.16 0 0);
+  --destructive: oklch(0.52 0.188 31);
+  --border: oklch(0.16 0 0 / 14%);
+  --input: oklch(0.16 0 0 / 20%);
+  --ring: oklch(0.52 0.188 31);
+  --brand: oklch(0.52 0.188 31);
+  --brand-foreground: oklch(0.99 0 0);
+}
+
+.dark {
+  --background: oklch(0.16 0 0);
+  --foreground: oklch(0.98 0 0);
+  --card: oklch(0.2 0 0);
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.2 0 0);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.62 0.2 33);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.26 0 0);
+  --secondary-foreground: oklch(0.98 0 0);
+  --muted: oklch(0.26 0 0);
+  --muted-foreground: oklch(0.68 0 0);
+  --accent: oklch(0.26 0 0);
+  --accent-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.62 0.2 33);
+  --border: oklch(0.98 0 0 / 16%);
+  --input: oklch(0.98 0 0 / 22%);
+  --ring: oklch(0.62 0.2 33);
+  --brand: oklch(0.62 0.2 33);
+  --brand-foreground: oklch(0.99 0 0);
+}
+
+@theme inline {
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+    outline-color: color-mix(in oklab, var(--ring) 50%, transparent);
+  }
+  html {
+    font-family: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* Мягкий стиль (по мотивам tilu.kz): вместо жёстких офсетных теней —
+   лёгкая тень, скругления и подъём при наведении. Классы оставлены прежними,
+   чтобы не трогать полторы сотни мест по внутренним экранам. */
+.brutal {
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 12px 32px rgba(15, 23, 42, 0.08);
+}
+.brutal-sm {
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 6px 18px rgba(15, 23, 42, 0.07);
+}
+.brutal-press {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+@media (hover: hover) {
+  .brutal-press:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.05), 0 18px 40px rgba(15, 23, 42, 0.12);
+  }
+}
+.brutal-press:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+
+/* Те же полторы сотни мест были свёрстаны под брутализм: острые углы,
+   чёрные рамки 2px, капс. Ниже — глобальное смягчение, чтобы внутренние
+   экраны совпадали с новой главной без правки каждого файла. */
+.rounded-none { border-radius: 14px; }
+.border-foreground { border-color: color-mix(in oklab, var(--foreground) 10%, transparent); }
+.divide-foreground > * { border-color: color-mix(in oklab, var(--foreground) 8%, transparent) !important; }
+.divide-y-2 > :not(:last-child) { border-bottom-width: 1px !important; border-top-width: 0 !important; }
+.border-2 { border-width: 1px; }
+.border-l-2 { border-left-width: 1px; }
+.border-r-2 { border-right-width: 1px; }
+.border-t-2 { border-top-width: 1px; }
+.border-b-2 { border-bottom-width: 1px; }
+.border-y-2 { border-top-width: 1px; border-bottom-width: 1px; }
+.uppercase { text-transform: none; letter-spacing: 0; }
+.tracking-widest, .tracking-wider { letter-spacing: 0; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 32s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brutal-press {
+    transition: none;
+  }
+  .brutal-press:hover,
+  .brutal-press:active {
+    transform: none;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Небесный hero главной (по мотивам tilu.kz): голубой градиент и «облака»
+   из мягких радиальных пятен — без картинок, чтобы ничего не грузить. */
+.sky {
+  background:
+    radial-gradient(60% 45% at 18% 78%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 70%),
+    radial-gradient(45% 40% at 82% 22%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 70%),
+    radial-gradient(38% 30% at 62% 88%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 70%),
+    linear-gradient(180deg, #b9dcf6 0%, #d9ecfa 45%, #f3f9fe 85%, #ffffff 100%);
+}
+.dark .sky {
+  background:
+    radial-gradient(60% 45% at 18% 78%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 70%),
+    linear-gradient(180deg, #0f2238 0%, #14243a 60%, var(--background) 100%);
+}
+.dark .sky h1, .dark .sky p { color: inherit; }
+
+/* Lumi — маскот-помощник: покачивание, моргание, колыхание пламени,
+   появление окна и «печатает…». Всё выключается при reduced-motion. */
+@keyframes lumi-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes lumi-blink { 0%, 90%, 100% { transform: scaleY(1); } 94% { transform: scaleY(0.08); } }
+@keyframes lumi-flame { 0%, 100% { transform: scale(1) rotate(-4deg); } 50% { transform: scale(1.1) rotate(4deg); } }
+@keyframes lumi-pop { from { opacity: 0; transform: translateY(10px) scale(0.96); } to { opacity: 1; transform: none; } }
+@keyframes lumi-dot { 0%, 80%, 100% { transform: translateY(0); opacity: 0.4; } 40% { transform: translateY(-4px); opacity: 1; } }
+.lumi-float { animation: lumi-float 3.2s ease-in-out infinite; }
+.lumi .lumi-eyes { animation: lumi-blink 4.6s ease-in-out infinite; }
+.lumi .lumi-flame { animation: lumi-flame 1.6s ease-in-out infinite; }
+.lumi-pop { animation: lumi-pop 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.lumi-dot { animation: lumi-dot 1s ease-in-out infinite; }
+.lumi-fab:hover .lumi { transform: rotate(-6deg); transition: transform 0.2s ease; }
+@media (prefers-reduced-motion: reduce) {
+  .lumi-float, .lumi .lumi-eyes, .lumi .lumi-flame, .lumi-pop, .lumi-dot { animation: none; }
+}
+
+/* Слова hero-заголовка анимируются по одному — нужен свой контекст перспективы. */
+h1 .hero-word { display: inline-block; will-change: transform; }
+
+/* Lumi ушёл гулять за курсором: в кнопке место пустеет, возвращается — появляется. */
+.lumi-home { transition: opacity .3s ease, transform .3s ease; }
+.lumi-home.lumi-away { opacity: 0; transform: scale(.6); }

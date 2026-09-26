@@ -1,0 +1,37 @@
+# Зависимости и сборка
+node_modules
+dist
+dist-ssr
+
+# Секреты — ничего из этого в репозиторий не попадает
+.env
+.env.local
+.env.*.local
+*.local
+.vercel
+
+# Промокоды одноразовые, рассылки содержат личные адреса
+promo_codes_*.txt
+sale_codes_*.txt
+promo_*.sql
+*_mailing.csv
+*_mailing.log
+
+# Логи
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Редакторы и ОС
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

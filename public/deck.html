@@ -1,0 +1,629 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumifield AI Pitch Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@700;800;900&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --paper: #FAF8F7;
+    --card: #FFFFFF;
+    --ink: #14100E;
+    --muted: #6E635F;
+    --brand: #E03A16;
+    --brand-ink: #FFFFFF;
+    --line: rgba(20, 16, 14, 0.16);
+    --line-hard: #14100E;
+    --shadow-sm: 4px 4px 0 var(--line-hard);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #100E0D;
+      --card: #191614;
+      --ink: #F6F1EF;
+      --muted: #A2958F;
+      --brand: #FF5A31;
+      --brand-ink: #16100E;
+      --line: rgba(246, 241, 239, 0.2);
+      --line-hard: #F6F1EF;
+      --shadow-sm: 4px 4px 0 var(--line-hard);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #100E0D;
+    --card: #191614;
+    --ink: #F6F1EF;
+    --muted: #A2958F;
+    --brand: #FF5A31;
+    --brand-ink: #16100E;
+    --line: rgba(246, 241, 239, 0.2);
+    --line-hard: #F6F1EF;
+    --shadow-sm: 4px 4px 0 var(--line-hard);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: "Inter Tight", system-ui, sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .mono {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 11px;
+  }
+
+  /* ── deck shell ─────────────────────────────── */
+  .deck {
+    scroll-snap-type: y mandatory;
+    height: 100dvh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .deck { scroll-behavior: auto; }
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 26px;
+    padding: 76px clamp(24px, 6vw, 96px) 92px;
+    border-bottom: 3px solid var(--line-hard);
+    position: relative;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--muted);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background: var(--brand);
+    flex: none;
+  }
+
+  .slide-num {
+    position: absolute;
+    top: 30px;
+    right: clamp(24px, 6vw, 96px);
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  h2 { font-size: clamp(30px, 5.2vw, 60px); }
+  h3 { font-size: clamp(17px, 1.6vw, 20px); letter-spacing: -0.01em; }
+
+  .lead {
+    font-size: clamp(17px, 1.9vw, 22px);
+    max-width: 62ch;
+  }
+  p { margin: 0; max-width: 68ch; }
+  .muted { color: var(--muted); }
+  .brand { color: var(--brand); }
+
+  /* ── title slide ────────────────────────────── */
+  .wordmark { display: flex; align-items: center; gap: 18px; }
+  .wordmark svg { width: 42px; height: auto; flex: none; }
+  .wordmark span {
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 900;
+    font-size: clamp(26px, 3.4vw, 40px);
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+  }
+  h1 { font-size: clamp(38px, 7.2vw, 88px); max-width: 18ch; }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    padding-top: 14px;
+    border-top: 3px solid var(--line-hard);
+    color: var(--muted);
+  }
+
+  /* ── building blocks ────────────────────────── */
+  .grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  }
+  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+  .card {
+    background: var(--card);
+    border: 3px solid var(--line-hard);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .card.pop { box-shadow: var(--shadow-sm); }
+  .card p { font-size: 15px; color: var(--muted); }
+
+  .stat {
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 900;
+    font-size: clamp(34px, 4.6vw, 50px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    color: var(--brand);
+  }
+
+  .step-num {
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 900;
+    font-size: 30px;
+    color: var(--brand);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  ul.ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  ul.ticks li {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 10px;
+    align-items: start;
+    font-size: 15px;
+  }
+  ul.ticks li::before { content: "✓"; color: var(--brand); font-weight: 700; }
+  ul.ticks li.no::before { content: "✕"; color: var(--muted); }
+  ul.ticks li.no { color: var(--muted); }
+
+  .tier { position: relative; }
+  .tier .price {
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 900;
+    font-size: 40px;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .tier .price small {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--muted);
+    letter-spacing: 0;
+  }
+  .tier.featured {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    box-shadow: var(--shadow-sm);
+  }
+  .tier.featured p { color: color-mix(in srgb, var(--paper) 72%, transparent); }
+  .tier.featured .price small { color: color-mix(in srgb, var(--paper) 72%, transparent); }
+  .tier.featured .price { color: var(--brand); }
+  .tag {
+    position: absolute;
+    top: -14px;
+    left: 18px;
+    background: var(--brand);
+    color: var(--brand-ink);
+    padding: 3px 10px;
+  }
+
+  .table-wrap { overflow-x: auto; border: 3px solid var(--line-hard); background: var(--card); }
+  table { border-collapse: collapse; width: 100%; min-width: 580px; }
+  th, td {
+    text-align: left;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    font-size: 15px;
+  }
+  thead th {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 11px;
+    color: var(--muted);
+    border-bottom: 3px solid var(--line-hard);
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.us { background: color-mix(in srgb, var(--brand) 12%, transparent); font-weight: 600; }
+
+  .rail-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 20px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .rail-item:first-child { border-top: 3px solid var(--line-hard); }
+  .rail-item .when { color: var(--brand); }
+
+  .fill {
+    background: color-mix(in srgb, var(--brand) 14%, transparent);
+    border-bottom: 2px dashed var(--brand);
+    padding: 0 4px;
+    font-weight: 600;
+  }
+
+  .callout {
+    border-left: 6px solid var(--brand);
+    padding: 4px 0 4px 18px;
+    font-size: clamp(17px, 2vw, 21px);
+    max-width: 60ch;
+    font-weight: 500;
+  }
+
+  a { color: var(--brand); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+
+  /* ── nav rail ───────────────────────────────── */
+  .nav {
+    position: fixed;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    z-index: 10;
+  }
+  .nav button {
+    width: 11px;
+    height: 11px;
+    padding: 0;
+    border: 2px solid var(--line-hard);
+    background: transparent;
+    cursor: pointer;
+  }
+  .nav button[aria-current="true"] { background: var(--brand); border-color: var(--brand); }
+
+  .hint {
+    position: fixed;
+    bottom: 14px;
+    right: 16px;
+    color: var(--muted);
+    background: var(--paper);
+    border: 2px solid var(--line);
+    padding: 5px 10px;
+    z-index: 10;
+  }
+  @media (max-width: 720px) {
+    .nav, .hint { display: none; }
+    .deck { scroll-snap-type: none; height: auto; overflow: visible; }
+    .slide { min-height: auto; padding: 56px 20px 64px; }
+  }
+
+  @media print {
+    .nav, .hint { display: none; }
+    .deck { height: auto; overflow: visible; }
+    .slide { min-height: auto; page-break-after: always; padding: 32px; border-bottom: none; }
+  }
+</style>
+
+<nav class="nav" aria-label="Slides"></nav>
+<div class="hint mono">↑ ↓ navigate · P print</div>
+
+<main class="deck" id="deck">
+
+  <!-- 1 ─ TITLE -->
+  <section class="slide">
+    <span class="slide-num mono">01 / 11</span>
+    <div class="wordmark">
+      <svg viewBox="0 0 120 176" fill="var(--brand)" aria-hidden="true">
+        <path fill-rule="evenodd" d="M60 2 L69.5 40.5 L108 50 L69.5 59.5 L60 98 L50.5 59.5 L12 50 L50.5 40.5 Z M60 33 L47 50 L60 67 L73 50 Z"/>
+        <path d="M78 22 c15 8 16 30 1 40 c9 -11 6 -24 -8 -32 c7 -2 9 1 7 -8 Z"/>
+        <path d="M55 92 c-3 9 4 14 3 22 l9 0 c-1 -8 5 -13 2 -22 Z"/>
+        <polygon points="60,110 75,174 45,174"/>
+        <polygon points="43,132 18,174 41,174"/>
+        <polygon points="77,132 102,174 79,174"/>
+      </svg>
+      <span>Lumifield AI</span>
+    </div>
+    <h1>The AI admissions navigator for Central&nbsp;Asia</h1>
+    <p class="lead muted">Every student in Kazakhstan gets the guidance that used to cost $2,000 — for the price of a pizza.</p>
+    <div class="meta-row mono">
+      <span>Pre-seed · 2026</span>
+      <span>Almaty, Kazakhstan</span>
+      <span><a href="https://lumifield.app">Live product →</a></span>
+    </div>
+  </section>
+
+  <!-- 2 ─ PROBLEM -->
+  <section class="slide">
+    <span class="slide-num mono">02 / 11</span>
+    <span class="eyebrow mono">The problem</span>
+    <h2>Talented students lose to <span class="brand">bad information</span></h2>
+    <p class="lead muted">A student in Kazakhstan who could get into MIT often doesn't — not for lack of ability, but because nobody told them what to do, or when.</p>
+    <div class="grid">
+      <div class="card">
+        <h3>Scattered</h3>
+        <p>Olympiads, grants and scholarships live across dozens of sites, Telegram channels and Instagram posts. No single source, nothing verified.</p>
+      </div>
+      <div class="card">
+        <h3>Missed</h3>
+        <p>Deadlines pass silently. One missed date means waiting a full year for the next cycle.</p>
+      </div>
+      <div class="card">
+        <h3>Unaffordable</h3>
+        <p>Private admission consultants charge $500–2,000 per student — out of reach for most families here.</p>
+      </div>
+      <div class="card">
+        <h3>Directionless</h3>
+        <p>"What should I even study?" gets answered by a relative's opinion, not by evidence about the student.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 ─ SOLUTION -->
+  <section class="slide">
+    <span class="slide-num mono">03 / 11</span>
+    <span class="eyebrow mono">The solution</span>
+    <h2>One place, from <span class="brand">"I don't know"</span> to submitted</h2>
+    <p class="callout">Lumifield AI replaces a $2,000 consultant with an AI that knows the student, knows the local landscape, and never forgets a deadline.</p>
+    <div class="grid">
+      <div class="card pop">
+        <h3>Know yourself</h3>
+        <p>A 20-question survey turns grades, subjects, interests and constraints into a real direction — not a horoscope.</p>
+      </div>
+      <div class="card pop">
+        <h3>Know the options</h3>
+        <p>A verified catalog of opportunities: olympiads, grants, internships and summer schools, local and international.</p>
+      </div>
+      <div class="card pop">
+        <h3>Know the plan</h3>
+        <p>A roadmap by semester with tracked deadlines, diagnostic tests and admission-chance estimates.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 ─ HOW IT WORKS -->
+  <section class="slide">
+    <span class="slide-num mono">04 / 11</span>
+    <span class="eyebrow mono">How it works</span>
+    <h2>Four steps, one evening</h2>
+    <div class="grid">
+      <div class="card">
+        <span class="step-num">1</span>
+        <h3>Answer 20 questions</h3>
+        <p>Grades, strong and weak subjects, language certificates, interests, budget, target country and year.</p>
+      </div>
+      <div class="card">
+        <span class="step-num">2</span>
+        <h3>Get the AI report</h3>
+        <p>Careers matched to the profile, real universities with requirements and deadlines, a motivation letter draft, reading list.</p>
+      </div>
+      <div class="card">
+        <span class="step-num">3</span>
+        <h3>Follow the roadmap</h3>
+        <p>The plan adapts to the student's year — grade 9 through second-year university — with concrete opportunities at each phase.</p>
+      </div>
+      <div class="card">
+        <span class="step-num">4</span>
+        <h3>Apply on time</h3>
+        <p>Deadline tracker, materials checklist, diagnostic IELTS/SAT/HSK scores, and an AI assistant for the essay.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 ─ PRODUCT -->
+  <section class="slide">
+    <span class="slide-num mono">05 / 11</span>
+    <span class="eyebrow mono">The product · live today</span>
+    <h2>Already shipped, not a&nbsp;mockup</h2>
+    <div class="grid">
+      <div class="card"><h3>AI guidance engine</h3><p>20 questions to a full personalised report in seconds.</p></div>
+      <div class="card"><h3>Opportunity catalog</h3><p>50+ verified programs with checked deadlines and direct application links.</p></div>
+      <div class="card"><h3>Admission roadmap</h3><p>Phased plan with a 3D globe of target countries and progress tracking.</p></div>
+      <div class="card"><h3>Level diagnostics</h3><p>IELTS / SAT / HSK tests that estimate admission probability per university.</p></div>
+      <div class="card"><h3>Lumifield AI</h3><p>An assistant for essays and product questions — with an explicit rule never to write the essay for you.</p></div>
+      <div class="card"><h3>Trilingual</h3><p>English, Kazakh and Russian — including the AI's own answers.</p></div>
+    </div>
+  </section>
+
+  <!-- 6 ─ BUSINESS MODEL -->
+  <section class="slide">
+    <span class="slide-num mono">06 / 11</span>
+    <span class="eyebrow mono">Business model</span>
+    <h2>Free to start, paid to&nbsp;win</h2>
+    <div class="grid">
+      <div class="card tier">
+        <h3>Free</h3>
+        <span class="price">$0<small> / forever</small></span>
+        <ul class="ticks">
+          <li>Full opportunity catalog</li>
+          <li>AI career guidance</li>
+          <li>Programs per direction</li>
+          <li class="no">University matching</li>
+        </ul>
+      </div>
+      <div class="card tier featured">
+        <span class="tag mono">Core revenue</span>
+        <h3>Lumifield+</h3>
+        <span class="price">$15<small> / month</small></span>
+        <ul class="ticks">
+          <li>Personal AI roadmap</li>
+          <li>University matching</li>
+          <li>IELTS / SAT / HSK + chances</li>
+          <li>AI essay assistant</li>
+        </ul>
+      </div>
+      <div class="card tier">
+        <h3>Lumifield Pro</h3>
+        <span class="price">$50<small> / 6 months</small></span>
+        <ul class="ticks">
+          <li>Everything in Plus</li>
+          <li>Universities with deadlines</li>
+          <li>Advanced AI review</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+    </div>
+    <p class="muted">The free tier drives acquisition; conversion happens when a student gets serious about applying. Next revenue lines: B2B licences for schools and education centres, and partnerships with program organisers.</p>
+  </section>
+
+  <!-- 7 ─ COMPETITION -->
+  <section class="slide">
+    <span class="slide-num mono">07 / 11</span>
+    <span class="eyebrow mono">Competition</span>
+    <h2>Consultant depth at app&nbsp;price</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Solution</th><th>Price</th><th>Personalised</th><th>Local context</th><th>KZ / RU language</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Private consultants</td><td>$500–2,000</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>Crimson, CollegeVine</td><td>$100+ / mo</td><td>Yes</td><td>No</td><td>No</td></tr>
+          <tr><td>Telegram channels, spreadsheets</td><td>Free</td><td>No</td><td>Partial</td><td>Yes</td></tr>
+          <tr><td class="us">Lumifield AI</td><td class="us">$15 / mo</td><td class="us">Yes</td><td class="us">Yes</td><td class="us">Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted">Global platforms are priced for Western families and know nothing about Bolashak, Daryn olympiads or NIS students. Local alternatives are free but unverified and impersonal. We hold all four columns.</p>
+  </section>
+
+  <!-- 8 ─ TRACTION -->
+  <section class="slide">
+    <span class="slide-num mono">08 / 11</span>
+    <span class="eyebrow mono">Traction</span>
+    <h2>Built and live, by one&nbsp;founder</h2>
+    <div class="grid">
+      <div class="card"><span class="stat">50+</span><h3 class="mono">Verified opportunities</h3></div>
+      <div class="card"><span class="stat">3</span><h3 class="mono">Languages, incl. AI output</h3></div>
+    </div>
+    <ul class="ticks">
+      <li>Production web app live, with accounts and cross-device sync</li>
+      <li>AI report engine, level diagnostics and essay assistant working end to end</li>
+      <li>Subscriptions and promo codes built; Stripe and Freedom Pay integrations coded</li>
+      <li>Telegram moderation pipeline for community-submitted opportunities</li>
+    </ul>
+  </section>
+
+  <!-- 9 ─ ROADMAP -->
+  <section class="slide">
+    <span class="slide-num mono">09 / 11</span>
+    <span class="eyebrow mono">Roadmap</span>
+    <h2>From product to business</h2>
+    <div>
+      <div class="rail-item"><span class="when mono">Now</span><div><h3>Payments live</h3><p class="muted">Legal entity and gateway settled, first subscriptions collected.</p></div></div>
+      <div class="rail-item"><span class="when mono">3 months</span><div><h3>First paying cohort</h3><p class="muted">School and education-centre partnerships driving steady signups; conversion and retention measured.</p></div></div>
+      <div class="rail-item"><span class="when mono">6 months</span><div><h3>B2B pilot</h3><p class="muted">Licence Lumifield AI to schools as their guidance layer, with a teacher dashboard.</p></div></div>
+      <div class="rail-item"><span class="when mono">12 months</span><div><h3>Regional expansion</h3><p class="muted">Uzbekistan and Kyrgyzstan — same problem, same gap, adjacent languages.</p></div></div>
+    </div>
+  </section>
+
+  <!-- 10 ─ TEAM -->
+  <section class="slide">
+    <span class="slide-num mono">10 / 11</span>
+    <span class="eyebrow mono">Team</span>
+    <h2>Solo founder, shipping&nbsp;daily</h2>
+    <div class="grid grid-2">
+      <div class="card pop">
+        <h3>Arnur Bizhigitov — Founder</h3>
+        <p>Full-time. Built the entire product end to end: product and UX, full-stack development, AI integration, payments, trilingual content.</p>
+        <p>Student at Tamos High School, Almaty. Serial student builder — Sway (a debate social network), YouPath AI (an LLM career navigator) and Air Studio (a gesture-based drawing app). Organising the Silk Road Hackathon in Almaty, and active in Kazakhstan’s Model UN community as delegate, co-chair, expert and organiser.</p>
+      </div>
+      <div class="card">
+        <h3>Why this founder</h3>
+        <ul class="ticks">
+          <li>I'm the target user — going through admissions myself, right now</li>
+          <li>Technical: features ship in days, not sprints</li>
+          <li>Local: I know Bolashak, Daryn and NIS from the inside, not from a report</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 ─ ASK -->
+  <section class="slide">
+    <span class="slide-num mono">11 / 11</span>
+    <span class="eyebrow mono">The ask</span>
+    <h2>What I need from the&nbsp;program</h2>
+    <div class="grid">
+      <div class="card pop"><h3>Distribution</h3><p>Introductions to schools, education centres and student communities across Kazakhstan.</p></div>
+      <div class="card pop"><h3>Infrastructure</h3><p>Help settling the legal entity and payment gateway so subscription revenue can start.</p></div>
+      <div class="card pop"><h3>Mentorship</h3><p>Turning a working product into a business: pricing, conversion, retention, first hires.</p></div>
+    </div>
+    <p class="callout">Goal by demo day: payments live, first paying cohort acquired, and school partnerships feeding steady growth.</p>
+    <div class="meta-row mono">
+      <span><a href="https://lumifield.app">lumifield.app</a></span>
+      <span>arnibb35@gmail.com</span>
+      <span>+7 706 609 7070</span>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  (function () {
+    var deck = document.getElementById("deck");
+    var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+    var nav = document.querySelector(".nav");
+    var dots = [];
+
+    slides.forEach(function (s, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", "Slide " + (i + 1));
+      b.addEventListener("click", function () { s.scrollIntoView({ block: "start" }); });
+      nav.appendChild(b);
+      dots.push(b);
+    });
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          var i = slides.indexOf(e.target);
+          dots.forEach(function (d, j) { d.setAttribute("aria-current", String(j === i)); });
+        }
+      });
+    }, { root: deck, threshold: 0.55 });
+    slides.forEach(function (s) { io.observe(s); });
+
+    function currentIndex() {
+      var top = deck.scrollTop;
+      for (var i = slides.length - 1; i >= 0; i--) {
+        if (slides[i].offsetTop <= top + 12) return i;
+      }
+      return 0;
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
+        e.preventDefault();
+        slides[Math.min(currentIndex() + 1, slides.length - 1)].scrollIntoView({ block: "start" });
+      } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+        e.preventDefault();
+        slides[Math.max(currentIndex() - 1, 0)].scrollIntoView({ block: "start" });
+      } else if (e.key === "p" || e.key === "P") {
+        window.print();
+      }
+    });
+  })();
+</script>
